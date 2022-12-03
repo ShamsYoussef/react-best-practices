@@ -76,8 +76,19 @@ return <p>{name} – {title}</p>
  - Methods/functions defined inside components should be in Camel case like ‘getApplicationData()’, ‘showText()’ etc.
  - For globally used Constant fields in the application, try to use capital letters only. Like const PI = “3.14”;
 
-### 2. Avoid the Use of the State as much as Possible
-Whenever using state in the component, keep it centralized to that component and pass it down in the component tree as props.
+### 2. Use shorthand for boolean props
+There are scenarios where you pass boolean props to a component.
+
+❌ Dont't
+```jsx
+<RegistrationForm hasPadding={true} withError={true} />
+```
+You don't need to do it necessarily like this because the occasion of the prop itself is either truthy (if the prop is passed) or falsy (if the prop is missing).A cleaner approach would be:
+
+✔️ Do:
+```jsx
+<RegistrationForm hasPadding withError />
+```
 
 ### 3. Write DRY Code
 
@@ -100,8 +111,8 @@ return (
 ```jsx
 return <Button>Close</Button>
 ```
-
-When there are multiple components to be returned, use or in shorthand form <> as shown below:
+### 5. Write a fragment when a div is not needed
+A React component can only render one single HTML tag at its root. So if you'd like to render two adjacent elements, you'll get the famous error called Adjacent JSX elements must be wrapped in an enclosing tag. 
 
 ❌ Dont't
 ```jsx 
@@ -114,6 +125,7 @@ const InfoText = () => {
   )
 }
 ```
+So, what can you do? You just wrap the rendered output into a fragment, which satisfies React and doesn't render an extra HTML element in the browser. 
 	
 ✔️ Do:
 ```jsx	
@@ -125,4 +137,34 @@ const InfoText = () => {
     	</>
   )
 }
+```
+Of course you could have solved this with a div tag as well. But using div after div will create something I like to call div hell in the browser where you got many deep nested div tags without any sense.
+
+### Integrate self closing tags when no children are needed
+when there are no children needed, try to use the component as a self closing element like the input tag in HTML, that doesn't take children as well.
+
+❌ Dont't
+```jsx 
+<NavigationBar></NavigationBar>
+```
+
+✔️ Do:
+```jsx	
+<NavigationBar />
+```
+
+### 5. Use Destructuring to Get Props
+
+Destructuring was introduced in ES6. This type of feature in the javascript function allows you to easily extract the form data and assign your variables from the object or array. Also, destructuring props make code cleaner and easier to read.
+
+❌ Dont't
+```jsx 
+const firstName = employee.firstName
+const lastName = employee.lastName
+const city = employee.city
+```
+	
+✔️ Do:
+```jsx	
+const { firstName, lastName, city } = employee;
 ```
