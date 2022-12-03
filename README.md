@@ -169,7 +169,7 @@ const city = props.city
 	
 ✔️ Do:
 ```jsx	
-const UserProfile = ({firstName, lastName, cit}) => {
+const UserProfile = ({firstName, lastName, city}) => {
   return (....)
 }
 ```
